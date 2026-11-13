@@ -19,13 +19,9 @@
 
     <table>
         <tr>
-            <th>Nama Pemilik Peminjaman</th>
-            <td>{{ $peminjaman->user->name ?? 'Pengguna' }} ({{ $peminjaman->user->email ?? '-' }})</td>
-        </tr>
-        <!-- <tr>
             <th>Peminjam (Anda)</th>
             <td>{{ Auth::user()->name }} ({{ Auth::user()->email }})</td>
-        </tr> -->
+        </tr>
         <tr>
             <th>Judul Buku</th>
             <td><strong>{{ $peminjaman->buku->judul }}</strong></td>

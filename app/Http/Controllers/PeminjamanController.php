@@ -133,10 +133,6 @@ class PeminjamanController extends Controller
         /**
      * Celah A4 (IDOR): Mengambil data peminjaman langsung tanpa memeriksa pemilik
      */
-    public function showPublicDetail($id): View
-    {
-        $peminjaman = Peminjaman::with(['user', 'buku.kategori'])->findOrFail($id);
-        return view('siswa.detail-riwayat', compact('peminjaman'));
-    }
+
 }
 

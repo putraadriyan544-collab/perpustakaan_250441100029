@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
     
     // BATAS CELAH A3
     // Celah A4 (IDOR): Melihat peminjaman tanpa cek kepemilikan
-    Route::get('/peminjaman/{id}', [PeminjamanController::class, 'showPublicDetail'])->name('peminjaman.show.public');
+    
     // Central Dashboard Redirector sesuai Role
     Route::get('/dashboard', function () {
         $user = auth()->user();
