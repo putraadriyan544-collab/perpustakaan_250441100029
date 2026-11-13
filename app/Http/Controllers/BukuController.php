@@ -35,7 +35,15 @@ class BukuController extends Controller
         $bukus = Buku::with('kategori')->latest()->get();
         return view('buku.index', compact('bukus'));
     }
-
+    /**
+     * Form Tambah Buku
+     */
+    //soal nomer 2
+    public function create(): View
+    {
+        $bukus = Buku::with('kategori')->latest()->get();
+        return view('buku.index', compact('bukus'));
+    }
     /**
      * Simpan Buku Baru via Form Web
      */

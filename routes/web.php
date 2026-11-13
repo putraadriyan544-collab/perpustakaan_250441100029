@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 // Halaman Publik (Dapat diakses tanpa login)
 Route::view('/', 'beranda')->name('beranda');
 Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
-Route::get('/buku/{id}', [BukuController::class, 'show'])->name('buku.show');
+Route::get('/buku/{id}', [BukuController::class, 'show'])->name('buku.show')->whereNumber('id');
 
 // Route Autentikasi Laravel Breeze (Login, Register, Logout)
 require __DIR__.'/auth.php';
@@ -67,7 +67,16 @@ Route::middleware('auth')->group(function () {
     });
 
     // Route Operasional Buku (Khusus yang memiliki Permission 'Kelola data buku' -> Admin & Petugas)
-    Route::middleware('permission:Kelola data buku')->group(function () {
+    // Route::middleware('permission:Kelola data buku')->group(function () {
+    //     Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
+    //     Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
+    //     Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
+    // });
+
+    //soal nomer 3
+        // Proteksi Gate: Hanya Admin dan Petugas yang bisa mengelola buku
+    Route::middleware('can:kelola-buku')->group(function () {
+        Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
         Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
         Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
         Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');

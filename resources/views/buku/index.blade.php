@@ -10,7 +10,9 @@
     <!-- Wadah Pesan Status / Error Validasi -->
     <div id="alert-container"></div>
 
-    @can('Kelola data buku')
+    {{-- @can('Kelola data buku') sebelum nomer 3 --}}
+
+    @can('kelola-buku')  
     <!-- Formulir Tambah / Ubah Buku (Hanya untuk Admin dan Petugas) -->
     <div class="card">
         <div class="card-header" id="form-title">Tambah Buku Baru</div>
@@ -72,16 +74,14 @@
             <td style="text-align: center;">
                 <a href="{{ route('buku.show', $buku->id) }}" class="btn btn-outline btn-sm">Detail</a>
 
-                @can('Kelola data buku')
+                @can('kelola-buku')
                     <button class="btn btn-warning btn-sm" onclick='editBuku(@json($buku))'>Ubah</button>
-                    <!-- <a href="/buku/{{ $buku->id }}/hapus" class="btn btn-danger btn-sm" onclick="return confirm('Hapus buku ini?')">Hapus</a> -->
+                    <form action="{{ route('buku.destroy', $buku->id) }}" method="POST" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus buku ini?')">Hapus</button>
+                    </form>
                 @endcan
-
-                <form action="{{ route('buku.destroy', $buku->id) }}" method="POST" style="display: inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus buku ini?')">Hapus</button>
-                </form>
 
                 @can('Mengajukan peminjaman buku')
                     <form action="{{ route('siswa.peminjaman.store') }}" method="POST" style="display: inline;">
