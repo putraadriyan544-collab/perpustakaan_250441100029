@@ -28,12 +28,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/buku-cari', function (\Illuminate\Http\Request $request) {
     $judul = $request->query('judul');
     // RENTAN: variabel $judul digabungkan langsung via kutip string
-    $data = \Illuminate\Support\Facades\DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+    $data = \Illuminate\Support\Facades\DB::select("SELECT * FROM bukus WHERE judul = ?", [$judul]);// $data = \Illuminate\Support\Facades\DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
     return response()->json($data);
     }); 
     // BATAS CELAH A2
     // Celah A3 (CSRF): Menghapus buku via method GET
-    Route::get('/buku/{buku}/hapus', [BukuController::class, 'destroy'])->name('buku.hapus.get');
+    
     // BATAS CELAH A3
     // Celah A4 (IDOR): Melihat peminjaman tanpa cek kepemilikan
     Route::get('/peminjaman/{id}', [PeminjamanController::class, 'showPublicDetail'])->name('peminjaman.show.public');

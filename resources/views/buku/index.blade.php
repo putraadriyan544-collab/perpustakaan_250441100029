@@ -66,7 +66,7 @@
         <tr>
             <td>{{ $index + 1 }}</td>
             <td><span class="badge">{{ $buku->kategori->nama ?? '-' }}</span></td>
-            <td><strong>{!! $buku->judul !!}</strong></td> <!-- Celah A1: tidak di-escape -->
+            <td><strong>{{ $buku->judul }}</strong></td> <!-- Celah A1: tidak di-escape -->
             <td>{{ $buku->penulis }}</td>
             <td>{{ $buku->tahun_terbit }}</td>
             <td style="text-align: center;">
@@ -74,8 +74,14 @@
 
                 @can('Kelola data buku')
                     <button class="btn btn-warning btn-sm" onclick='editBuku(@json($buku))'>Ubah</button>
-                    <a href="/buku/{{ $buku->id }}/hapus" class="btn btn-danger btn-sm" onclick="return confirm('Hapus buku ini?')">Hapus</a>
+                    <!-- <a href="/buku/{{ $buku->id }}/hapus" class="btn btn-danger btn-sm" onclick="return confirm('Hapus buku ini?')">Hapus</a> -->
                 @endcan
+
+                <form action="{{ route('buku.destroy', $buku->id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus buku ini?')">Hapus</button>
+                </form>
 
                 @can('Mengajukan peminjaman buku')
                     <form action="{{ route('siswa.peminjaman.store') }}" method="POST" style="display: inline;">
